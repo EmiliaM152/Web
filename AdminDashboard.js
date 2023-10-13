@@ -1,7 +1,8 @@
-import React from "react";
+import React from  'react';
+import AdminHeader from './AdminHeader';
 
-export default function AdminDashboard(){
+export default function AdminDashboard(){    
     return(
-        <div>AdminDashboard</div>
+        <AdminHeader />
     )
 }
