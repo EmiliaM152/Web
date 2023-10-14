@@ -1,66 +1,63 @@
-﻿using EMedicineBackEnd.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using EMedicineBackEnd.Models;
+using System.Data.SqlClient;
 
 namespace EMedicineBackEnd.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class MedicinesController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        public UsersController(IConfiguration configuration)
+        public MedicinesController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
         [HttpPost]
-        [Route("registration")]
-        public Response register(Users users)
+        [Route("addToCart")]
+        public Response addToCart(Cart cart)
         {
-            Response response = new Response();
             DAL dal = new DAL();
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("EMedCS").ToString());
-            response = dal.register(users, connection);
+            Response response = dal.addToCart(cart, connection);
             return response;
         }
 
         [HttpPost]
-        [Route("login")]
-        public Response login(Users users)
+        [Route("removeFromCart")]
+        public Response removeFromCart(Cart cart)
         {
             DAL dal = new DAL();
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("EMedCS").ToString());
-            Response response = dal.login(users, connection);
+            Response response = dal.removeFromCart(cart, connection);
             return response;
         }
 
         [HttpPost]
-        [Route("viewUser")]
-        public Response viewUser(Users users)
+        [Route("placeOrder")]
+        public Response placeOrder(Users users)
         {
             DAL dal = new DAL();
-            SqlConnection connection= new SqlConnection(_configuration.GetConnectionString("EMedCS").ToString());
-            Response response = dal.viewUser(users, connection);
+            SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("EMedCS").ToString());
+            Response response = dal.placeOrder(users, connection);
             return response;
         }
 
         [HttpPost]
-        [Route("updateProfile")]
-        public Response updateProfile(Users users)
+        [Route("orderList")]
+        public Response orderList(Users users)
         {
             DAL dal = new DAL();
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("EMedCS").ToString());
-            Response response = dal.updateProfile(users, connection);
+            Response response = dal.orderList(users, connection);
             return response;
         }
-
-
     }
 }
